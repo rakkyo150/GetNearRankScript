@@ -77,7 +77,7 @@ internal class PlaylistMaker
         _fileName = dt.ToString("yyyyMMdd") + "-RR" + Config.Instance.RankRange.ToString() +
         "-PF" + Config.Instance.PPFilter + "-YPR" + Config.Instance.YourPageRange +
         "-OPR" + Config.Instance.OthersPageRange;
-        _playlistPath =Path.Combine(Assembly.GetEntryAssembly().Location, $"{_fileName}.bplist");
+        _playlistPath =Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{_fileName}.bplist");
 
         Playlist playlistEdit = new Playlist();
         playlistEdit.playlistTitle = _fileName;
