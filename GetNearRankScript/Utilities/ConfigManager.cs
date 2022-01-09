@@ -12,6 +12,7 @@ internal class ConfigManager
         if (_jsonDyn==null||_jsonDyn.YourId=="")
         {
             Console.WriteLine("There is wrong with Config.json");
+            Console.WriteLine("Remake Config.json");
             MakeConfigFile(path);
             LoadConfigFile(path);
             return;
@@ -31,6 +32,14 @@ internal class ConfigManager
     {
         Console.WriteLine("Input Your ID");
         Config.Instance.YourId = Console.ReadLine();
+        Console.WriteLine("Input Rank Range");
+        Config.Instance.RankRange = int.Parse(Console.ReadLine());
+        Console.WriteLine("Input PP Filter");
+        Config.Instance.PPFilter = int.Parse(Console.ReadLine());
+        Console.WriteLine("Input Your Page Range");
+        Config.Instance.YourPageRange = int.Parse(Console.ReadLine());
+        Console.WriteLine("Input Rivals' Page Range");
+        Config.Instance.OthersPageRange = int.Parse(Console.ReadLine());
 
         string _jsonFinish=JsonConvert.SerializeObject(Config.Instance, Formatting.Indented);
         
