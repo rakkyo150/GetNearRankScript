@@ -43,7 +43,7 @@ internal class ConfigManager
 
         string _jsonFinish=JsonConvert.SerializeObject(Config.Instance, Formatting.Indented);
         
-        StreamWriter wr = new StreamWriter(path, false);
+        StreamWriter wr = new StreamWriter(new FileStream(path,FileMode.Create));
         wr.WriteLine(_jsonFinish);
         wr.Close();
     }

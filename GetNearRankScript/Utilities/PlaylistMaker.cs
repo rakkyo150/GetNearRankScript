@@ -137,7 +137,7 @@ internal class PlaylistMaker
         _jsonFinish = JsonConvert.SerializeObject(playlistEdit, Formatting.Indented);
 
 
-        StreamWriter wr = new StreamWriter(_playlistPath, false);
+        StreamWriter wr = new StreamWriter(new FileStream(_playlistPath,FileMode.Create));
         wr.WriteLine(_jsonFinish);
         wr.Close();
     }
