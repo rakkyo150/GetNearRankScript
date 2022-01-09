@@ -1,5 +1,7 @@
-﻿
-string configFile = Path.Combine(Environment.CurrentDirectory,"Config.json");
+﻿using System.Reflection;
+
+// Environment.CurrentDirectoryはMacだとUsername直下になる
+string configFile = Path.Combine(Assembly.GetEntryAssembly().Location,"Config.json");
 
 ConfigManager _configManager=new ConfigManager();
 Progress<string> progress = new Progress<string>(onProgressChanged);

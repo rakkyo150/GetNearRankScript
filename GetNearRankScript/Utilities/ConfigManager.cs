@@ -42,7 +42,8 @@ internal class ConfigManager
         Config.Instance.OthersPageRange = int.Parse(Console.ReadLine());
 
         string _jsonFinish=JsonConvert.SerializeObject(Config.Instance, Formatting.Indented);
-        
+
+        // 変えなくてもよかった
         StreamWriter wr = new StreamWriter(new FileStream(path,FileMode.Create));
         wr.WriteLine(_jsonFinish);
         wr.Close();
