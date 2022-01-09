@@ -1,6 +1,6 @@
 # GetNearRankScript
 [GetNearRankMod](https://github.com/rakkyo150/GetNearRankMod)(GetNearRankを参考にした、順位が近くの人が自分よりPPを多く取ったランク曲を取得してプレイリストにするMOD)のツール版。<br>
-QUESTなどのスタンドアローン機のみでBeat Saberをしている人など、Mod版を使えない人はこちらを使ってください。
+QUESTなどのスタンドアローン機のみでBeat Saberをしている人など、Mod版を使えない人はこちらを使ってください。<br>
 WindowsとMacで利用できます。<br>
 日本ローカルランキングでのみ正常に動きます。<br>
 
