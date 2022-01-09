@@ -66,7 +66,7 @@ internal class PlaylistMaker
         // Playlist作成
 
         string _fileName;
-        string _beatSaberPlaylistPath;
+        string _playlistPath;
         string hash;
         string name = "";
         string characteristic = "";
@@ -76,7 +76,7 @@ internal class PlaylistMaker
         _fileName = dt.ToString("yyyyMMdd") + "-RR" + Config.Instance.RankRange.ToString() +
         "-PF" + Config.Instance.PPFilter + "-YPR" + Config.Instance.YourPageRange +
         "-OPR" + Config.Instance.OthersPageRange;
-        _beatSaberPlaylistPath = $".\\{_fileName}.bplist";
+        _playlistPath =Path.Combine(Environment.CurrentDirectory,$"{_fileName}.bplist");
 
         Playlist playlistEdit = new Playlist();
         playlistEdit.playlistTitle = _fileName;
@@ -137,7 +137,7 @@ internal class PlaylistMaker
         _jsonFinish = JsonConvert.SerializeObject(playlistEdit, Formatting.Indented);
 
 
-        StreamWriter wr = new StreamWriter(_beatSaberPlaylistPath, false);
+        StreamWriter wr = new StreamWriter(_playlistPath, false);
         wr.WriteLine(_jsonFinish);
         wr.Close();
     }

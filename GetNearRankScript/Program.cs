@@ -1,5 +1,5 @@
 ﻿
-string configFile = @".\\Config.json";
+string configFile = Path.Combine(Environment.CurrentDirectory,"Config.json");
 
 ConfigManager _configManager=new ConfigManager();
 Progress<string> progress = new Progress<string>(onProgressChanged);
