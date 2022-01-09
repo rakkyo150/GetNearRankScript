@@ -55,18 +55,19 @@ async Task GeneratePlaylist(IProgress<string> iProgress)
         iProgress.Report("Making Playllist");
         _playlistMaker.MakePlaylist(hashAndDifficultyList);
 
-        // iProgress.Report()だとfinallyの後になる
-        Console.WriteLine("Success!");
+        iProgress.Report("Success!");
+
+        iProgress.Report("Press enter to close");
+        Console.ReadLine();
     }
     catch (Exception e)
     {
-        iProgress.Report("Error: " + e.Message);
-        Console.WriteLine("Please confirm Config.json");
-    }
-    finally
-    {
-        Console.WriteLine("Press enter to close");
-        Console.ReadLine();
+        // iProgress.ReportだとConsole.WriteLineが先に来ちゃう
+        Console.WriteLine("Error: " + e.Message);
+        Console.WriteLine("From the beginning again!");
+        _configManager.MakeConfigFile(configFile);
+        _configManager.LoadConfigFile(configFile);
+        await GeneratePlaylist(progress);
     }
 }
 

@@ -9,9 +9,9 @@ internal class ConfigManager
         re.Close();
         dynamic _jsonDyn=JsonConvert.DeserializeObject<dynamic>(_jsonStr);
 
-        if (_jsonDyn==null||_jsonDyn.YourId=="")
+        if (_jsonDyn==null)
         {
-            Console.WriteLine("There is wrong with Config.json");
+            Console.WriteLine("There is something wrong with Config.json");
             Console.WriteLine("Remake Config.json");
             MakeConfigFile(path);
             LoadConfigFile(path);
