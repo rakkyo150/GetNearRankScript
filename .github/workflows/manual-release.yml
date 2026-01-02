@@ -4,14 +4,16 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: v2.0.0
+        description: リリースタグ名
         required: true
+        default: "v2.0.0"
       release_body:
-        description: See the assets to download this version and install.
+        description: リリースノートの内容
         required: false
+        default: "See the assets to download this version and install."
       draft:
         description: 下書きリリースとして作成するか
-        required: false
+        required: true
         default: true
         type: boolean
 
