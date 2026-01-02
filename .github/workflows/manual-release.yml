@@ -48,6 +48,7 @@ jobs:
     - uses: actions/setup-go@v6
       with:
         go-version: "1.25"
+        cache: false
     - name: Build binary
       shell: bash
       env:
@@ -65,5 +66,5 @@ jobs:
         asset_name: GetNearRankScript-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.ext }}
         tag: ${{ github.event.inputs.tag }}
         release_name: ${{ github.event.inputs.tag }}
-        release_body: ${{ github.event.inputs.release_body }}
+        body: ${{ github.event.inputs.release_body }}
         draft: ${{ github.event.inputs.draft }}
