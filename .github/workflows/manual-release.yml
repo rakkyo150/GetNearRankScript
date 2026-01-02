@@ -1,0 +1,77 @@
+name: Manual Go release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: v2.0.0
+        required: true
+      release_body:
+        description: See the assets to download this version and install.
+        required: false
+      draft:
+        description: 下書きリリースとして作成するか
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.tag }}
+          release_name: ${{ github.event.inputs.tag }}
+          body: ${{ github.event.inputs.release_body }}
+          draft: ${{ github.event.inputs.draft }}
+          prerelease: false
+
+  build:
+    needs: release
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            goos: linux
+            goarch: amd64
+            ext: ""
+          - runner: windows-latest
+            goos: windows
+            goarch: amd64
+            ext: ".exe"
+          - runner: macos-latest
+            goos: darwin
+            goarch: amd64
+            ext: ""
+          - runner: macos-latest
+            goos: darwin
+            goarch: arm64
+            ext: ""
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "1.25"
+      - name: Build binary
+        shell: bash
+        env:
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+          CGO_ENABLED: 0
+        run: |
+          mkdir -p build
+          go build -o build/GetNearRankScript${{ matrix.ext }}
+      - name: Upload binary to release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ needs.release.outputs.upload_url }}
+          asset_path: build/GetNearRankScript${{ matrix.ext }}
+          asset_name: GetNearRankScript-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.ext }}
+          asset_content_type: application/octet-stream
