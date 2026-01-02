@@ -63,4 +63,7 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: build/GetNearRankScript${{ matrix.ext }}
         asset_name: GetNearRankScript-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.ext }}
-        tag: ${{ github.ref }}
+        tag: ${{ github.event.inputs.tag }}
+        release_name: ${{ github.event.inputs.tag }}
+        release_body: ${{ github.event.inputs.release_body }}
+        draft: ${{ github.event.inputs.draft }}
