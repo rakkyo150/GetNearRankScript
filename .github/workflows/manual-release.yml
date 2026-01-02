@@ -11,11 +11,6 @@ on:
         description: リリースノートの内容
         required: false
         default: "See the assets to download this version and install."
-      draft:
-        description: 下書きリリースとして作成するか
-        required: true
-        default: true
-        type: boolean
 
 jobs:  
   publish:
@@ -66,5 +61,5 @@ jobs:
         asset_name: GetNearRankScript-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.ext }}
         tag: ${{ github.event.inputs.tag }}
         release_name: ${{ github.event.inputs.tag }}
+        overwrite: true
         body: ${{ github.event.inputs.release_body }}
-        draft: ${{ github.event.inputs.draft }}
