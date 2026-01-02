@@ -17,30 +17,12 @@ on:
         default: true
         type: boolean
 
-jobs:
-  release:
-    runs-on: ubuntu-latest
+jobs:  
+  publish:
+    name: Publish for ${{ matrix.goos }}-${{ matrix.goarch }}
+    runs-on: ${{ matrix.runner }}
     permissions:
       contents: write
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-    steps:
-      - uses: actions/checkout@v6
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ github.event.inputs.tag }}
-          release_name: ${{ github.event.inputs.tag }}
-          body: ${{ github.event.inputs.release_body }}
-          draft: ${{ github.event.inputs.draft }}
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  build:
-    needs: release
-    runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
         include:
@@ -60,24 +42,25 @@ jobs:
             goos: darwin
             goarch: arm64
             ext: ""
+
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-go@v6
-        with:
-          go-version: "1.25"
-      - name: Build binary
-        shell: bash
-        env:
-          GOOS: ${{ matrix.goos }}
-          GOARCH: ${{ matrix.goarch }}
-          CGO_ENABLED: 0
-        run: |
-          mkdir -p build
-          go build -o build/GetNearRankScript${{ matrix.ext }}
-      - name: Upload binary to release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ needs.release.outputs.upload_url }}
-          asset_path: build/GetNearRankScript${{ matrix.ext }}
-          asset_name: GetNearRankScript-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.ext }}
-          asset_content_type: application/octet-stream
+    - uses: actions/checkout@v6
+    - uses: actions/setup-go@v6
+      with:
+        go-version: "1.25"
+    - name: Build binary
+      shell: bash
+      env:
+        GOOS: ${{ matrix.goos }}
+        GOARCH: ${{ matrix.goarch }}
+        CGO_ENABLED: 0
+      run: |
+        mkdir -p build
+        go build -o build/GetNearRankScript${{ matrix.ext }}
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/GetNearRankScript${{ matrix.ext }}
+        asset_name: GetNearRankScript-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.ext }}
+        tag: ${{ github.ref }}
