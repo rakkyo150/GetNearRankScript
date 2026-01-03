@@ -2,7 +2,7 @@
 
 ## はじめに
 [GetNearRankMod](https://github.com/rakkyo150/GetNearRankMod)([GetNearRank](https://github.com/culage/GetNearRank)を参考にした、順位が近くの人が自分よりPPを多く取ったランク曲を取得してプレイリストにするMOD)のツール版。<br>
-Quest2などのスタンドアローン機のみでBeat SaberをプレイしていてPCModを使えない環境の方で、WinodwsとMacを使用している方はこちらを使ってください。<br>
+Quest2などのスタンドアローン機のみでBeat SaberをプレイしていてPCModを使えない環境の方で、Winodws、MacやLinuxを使用している方はこちらを使ってください。<br>
 GetNearRankModもGetNearRankScriptも動かすことができない環境の方は、Docker環境があれば使える[GetNearRankDocker](https://github.com/rakkyo150/GetNearRankDocker)をお使いください。<br>
 
 日本ローカルランキングでのみ正常に動きます。<br>
