@@ -96,28 +96,28 @@ func GetLocalTargetedIDs(cfg *Config, yourCountryRank int) ([]string, error) {
 		}
 	}
 
-	idSet := make(map[string]struct{})
+	ids := make([]string, 0)
 	for i := 0; lowRank-i > yourCountryRank; i++ {
 		if id, ok := result[lowRank-i]; ok {
-			idSet[id] = struct{}{}
+			ids = append(ids, id)
 		}
 
 		if id, ok := result[highRank+i]; ok {
-			idSet[id] = struct{}{}
+			ids = append(ids, id)
 		}
 	}
 
 	if id, ok := result[yourCountryRank]; ok {
-		delete(idSet, id)
+		for i, v := range ids {
+			if v == id {
+				ids = append(ids[:i], ids[i+1:]...)
+				break
+			}
+		}
 	}
 
-	if len(idSet) == 0 {
+	if len(ids) == 0 {
 		return nil, fmt.Errorf("対象のIDが見つかりませんでした")
-	}
-
-	ids := make([]string, 0, len(idSet))
-	for id := range idSet {
-		ids = append(ids, id)
 	}
 
 	return ids, nil
